@@ -4,5 +4,5 @@ import { CreateTrackDto } from '../../track/dto/create-track.dto';
 import { tracks } from '../data.placeholder';
 
 export class DbTracks extends DbEntity<Track, CreateTrackDto, CreateTrackDto> {
-  entities = tracks;
+  protected entities = tracks;
 }

@@ -9,10 +9,12 @@ export abstract class DbEntity<
   protected entities: Entity[];
 
   create(createDto: CreateDto): Entity {
-    return {
+    const created = {
       ...createDto,
       id: uuidv4(),
     } as unknown as Entity;
+    this.entities.push(created);
+    return created;
   }
 
   getById(id: string): Entity | null {
