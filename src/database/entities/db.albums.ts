@@ -5,4 +5,8 @@ import { albums } from '../data.placeholder';
 
 export class DbAlbums extends DbEntity<Album, CreateAlbumDto, CreateAlbumDto> {
   entities = albums;
+
+  getAlbumsByArtistId(artistId: string): Album[] {
+    return this.entities.filter((album) => album.artistId === artistId);
+  }
 }
