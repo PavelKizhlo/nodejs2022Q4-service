@@ -22,6 +22,10 @@ export abstract class DbEntity<
     return entity ?? null;
   }
 
+  getByIdsArray(ids: string[]): Entity[] {
+    return this.entities.filter((entity) => ids.includes(entity.id));
+  }
+
   getAll(): Entity[] {
     return this.entities;
   }
