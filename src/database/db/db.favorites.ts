@@ -1,4 +1,4 @@
-import { Favorites } from '../../favorites/interfaces/favorites.interface';
+import { Favorites } from '../../favorites/entities/favorites.entity';
 import { NoRequiredEntity } from '../errors/noRequireEntity.error';
 
 type EntityType = 'artists' | 'albums' | 'tracks';

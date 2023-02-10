@@ -1,7 +1,7 @@
-import { User } from '../user/interfaces/user.class';
-import { Track } from '../track/interfaces/track.interface';
-import { Artist } from '../artist/interfaces/artist.interface';
-import { Album } from '../album/interfaces/album.interface';
+import { User } from '../user/entities/user.entity';
+import { Track } from '../track/entities/track.entity';
+import { Artist } from '../artist/entities/artist.entity';
+import { Album } from '../album/entities/album.entity';
 
 export const users: User[] = [
   new User({

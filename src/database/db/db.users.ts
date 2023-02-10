@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { DbEntity } from './db.entity';
-import { User } from '../../user/interfaces/user.class';
+import { User } from '../../user/entities/user.entity';
 import { UpdatePasswordDto } from '../../user/dto/update-password.dto';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
 import { NoRequiredEntity } from '../errors/noRequireEntity.error';

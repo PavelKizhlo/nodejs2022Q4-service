@@ -1,5 +1,5 @@
 import { DbEntity } from './db.entity';
-import { Track } from '../../track/interfaces/track.interface';
+import { Track } from '../../track/entities/track.entity';
 import { CreateTrackDto } from '../../track/dto/create-track.dto';
 import { tracks } from '../data.placeholder';
 

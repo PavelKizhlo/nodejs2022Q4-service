@@ -1,5 +1,5 @@
 import { DbEntity } from './db.entity';
-import { Artist } from '../../artist/interfaces/artist.interface';
+import { Artist } from '../../artist/entities/artist.entity';
 import { CreateArtistDto } from '../../artist/dto/create-artist.dto';
 import { artists } from '../data.placeholder';
 

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { Database } from '../database/database';
 import { NoRequiredEntity } from '../database/errors/noRequireEntity.error';
-import { FavoritesResponse } from './interfaces/favorites-response.interface';
+import { FavoritesResponse } from './entities/favorites-response.class';
 
 @Injectable()
 export class FavoritesService {

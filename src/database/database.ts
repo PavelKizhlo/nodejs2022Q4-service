@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DbUsers } from './entities/db.users';
-import { DbArtists } from './entities/db.artists';
-import { DbTracks } from './entities/db.tracks';
-import { DbAlbums } from './entities/db.albums';
-import { DbFavorites } from './entities/db.favorites';
+import { DbUsers } from './db/db.users';
+import { DbArtists } from './db/db.artists';
+import { DbTracks } from './db/db.tracks';
+import { DbAlbums } from './db/db.albums';
+import { DbFavorites } from './db/db.favorites';
 
 @Injectable()
 export class Database {

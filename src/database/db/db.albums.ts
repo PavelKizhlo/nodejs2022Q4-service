@@ -1,5 +1,5 @@
 import { DbEntity } from './db.entity';
-import { Album } from '../../album/interfaces/album.interface';
+import { Album } from '../../album/entities/album.entity';
 import { CreateAlbumDto } from '../../album/dto/create-album.dto';
 import { albums } from '../data.placeholder';
 
