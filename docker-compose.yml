@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    image: nestjs-app
+    container_name: nest-app
+    restart: always
+    env_file: .env
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db
+    volumes:
+      - ./src:/usr/app/src
+    networks:
+      - app-network
+  db:
+    build: ./src/database
+    image: postgres-db
+    container_name: db
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - app-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  pg-data:
+networks:
+  app-network:
+    driver: bridge
+    enable_ipv6: false
