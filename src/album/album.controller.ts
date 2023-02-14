@@ -20,7 +20,7 @@ export class AlbumController {
 
   @Get()
   findAll() {
-    return this.albumService.getAllAlbums();
+    // return this.albumService.getAllAlbums();
   }
 
   @Get(':id')
@@ -34,16 +34,16 @@ export class AlbumController {
     )
     id: string,
   ) {
-    const album = this.albumService.getAlbumById(id);
-    if (!album) {
-      throw new NotFoundException('No albums with such id');
-    }
-    return album;
+    // const album = this.albumService.getAlbumById(id);
+    // if (!album) {
+    //   throw new NotFoundException('No albums with such id');
+    // }
+    // return album;
   }
 
   @Post()
   create(@Body() createAlbumDto: CreateAlbumDto) {
-    return this.albumService.createAlbum(createAlbumDto);
+    // return this.albumService.createAlbum(createAlbumDto);
   }
 
   @Put(':id')
@@ -58,7 +58,7 @@ export class AlbumController {
     id: string,
     @Body() updateAlbumDto: CreateAlbumDto,
   ) {
-    return this.albumService.updateAlbum(id, updateAlbumDto);
+    // return this.albumService.updateAlbum(id, updateAlbumDto);
   }
 
   @Delete(':id')
@@ -73,6 +73,6 @@ export class AlbumController {
     )
     id: string,
   ) {
-    this.albumService.removeAlbum(id);
+    // this.albumService.removeAlbum(id);
   }
 }

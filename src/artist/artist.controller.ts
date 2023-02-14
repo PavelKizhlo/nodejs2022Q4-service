@@ -20,7 +20,7 @@ export class ArtistController {
 
   @Get()
   findAll() {
-    return this.artistService.getAllArtists();
+    // return this.artistService.getAllArtists();
   }
 
   @Get(':id')
@@ -34,16 +34,16 @@ export class ArtistController {
     )
     id: string,
   ) {
-    const artist = this.artistService.getArtistById(id);
-    if (!artist) {
-      throw new NotFoundException('No artists with such id');
-    }
-    return artist;
+    // const artist = this.artistService.getArtistById(id);
+    // if (!artist) {
+    //   throw new NotFoundException('No artists with such id');
+    // }
+    // return artist;
   }
 
   @Post()
   create(@Body() createArtistDto: CreateArtistDto) {
-    return this.artistService.createArtist(createArtistDto);
+    // return this.artistService.createArtist(createArtistDto);
   }
 
   @Put(':id')
@@ -58,7 +58,7 @@ export class ArtistController {
     id: string,
     @Body() updateArtistDto: CreateArtistDto,
   ) {
-    return this.artistService.updateArtist(id, updateArtistDto);
+    // return this.artistService.updateArtist(id, updateArtistDto);
   }
 
   @Delete(':id')
@@ -73,6 +73,6 @@ export class ArtistController {
     )
     id: string,
   ) {
-    this.artistService.removeArtist(id);
+    // this.artistService.removeArtist(id);
   }
 }

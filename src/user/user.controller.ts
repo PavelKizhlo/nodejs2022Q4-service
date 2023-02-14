@@ -24,7 +24,7 @@ export class UserController {
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
-    return this.userService.getAllUsers();
+    // return this.userService.getAllUsers();
   }
 
   @Get(':id')
@@ -39,17 +39,17 @@ export class UserController {
     )
     id: string,
   ) {
-    const user = this.userService.getUserById(id);
-    if (!user) {
-      throw new NotFoundException('No users with such id');
-    }
-    return user;
+    // const user = this.userService.getUserById(id);
+    // if (!user) {
+    //   throw new NotFoundException('No users with such id');
+    // }
+    // return user;
   }
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+    // return this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
@@ -65,7 +65,7 @@ export class UserController {
     id: string,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    return this.userService.updatePassword(id, updatePasswordDto);
+    // return this.userService.updatePassword(id, updatePasswordDto);
   }
 
   @Delete(':id')
@@ -80,6 +80,6 @@ export class UserController {
     )
     id: string,
   ) {
-    this.userService.removeUser(id);
+    // this.userService.removeUser(id);
   }
 }

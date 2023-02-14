@@ -20,7 +20,7 @@ export class TrackController {
 
   @Get()
   findAll() {
-    return this.trackService.getAllTracks();
+    // return this.trackService.getAllTracks();
   }
 
   @Get(':id')
@@ -34,16 +34,16 @@ export class TrackController {
     )
     id: string,
   ) {
-    const track = this.trackService.getTrackById(id);
-    if (!track) {
-      throw new NotFoundException('No tracks with such id');
-    }
-    return track;
+    // const track = this.trackService.getTrackById(id);
+    // if (!track) {
+    //   throw new NotFoundException('No tracks with such id');
+    // }
+    // return track;
   }
 
   @Post()
   create(@Body() createTrackDto: CreateTrackDto) {
-    return this.trackService.createTrack(createTrackDto);
+    // return this.trackService.createTrack(createTrackDto);
   }
 
   @Put(':id')
@@ -58,7 +58,7 @@ export class TrackController {
     id: string,
     @Body() updateTrackDto: CreateTrackDto,
   ) {
-    return this.trackService.updateTrack(id, updateTrackDto);
+    // return this.trackService.updateTrack(id, updateTrackDto);
   }
 
   @Delete(':id')
@@ -73,6 +73,6 @@ export class TrackController {
     )
     id: string,
   ) {
-    this.trackService.removeTrack(id);
+    // this.trackService.removeTrack(id);
   }
 }
