@@ -19,4 +19,5 @@ export default {
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
+  entities: [path.join(__dirname, '**', '*.entity.{ts,js}')],
 } as TypeOrmModuleOptions;
