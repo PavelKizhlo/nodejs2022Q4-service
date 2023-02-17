@@ -20,7 +20,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "typeorm": "ts-node ./node_modules/typeorm/cli -d ./src/dataSource.ts",
+    "typeorm:generate": "npm run typeorm migration:generate src/database/migrations/newTables",
+    "typeorm:migration": "npm run typeorm migration:run",
     "docker:dev": "docker-compose up",
+    "docker:stop": "docker-compose down",
     "docker:build": "docker-compose build",
     "docker:scan-app": "docker scan nestjs-app",
     "docker:scan-db": "docker scan postgres-db"

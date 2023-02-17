@@ -11,4 +11,5 @@ RUN npm run build
 CMD ["npm", "run", "start:dev"]
 
 #You can also use nodemon for hot reload. To do this, uncomment the line below and remove previous CMD
+#You also need to override npm script in docker-compose.yml command
 #CMD ["npm", "run", "start:dev-nodemon"]
