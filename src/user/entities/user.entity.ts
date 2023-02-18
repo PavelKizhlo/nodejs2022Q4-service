@@ -1,5 +1,12 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -13,16 +20,30 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column()
+  @VersionColumn()
   version: number; // integer number, increments on update
 
-  @Column()
+  @CreateDateColumn({
+    transformer: {
+      from(date: Date): number {
+        return date.getTime();
+      },
+      to(date: Date): Date {
+        return date;
+      },
+    },
+  })
   createdAt: number; // timestamp of creation
 
-  @Column()
+  @UpdateDateColumn({
+    transformer: {
+      from(date: Date): number {
+        return date.getTime();
+      },
+      to(date: Date): Date {
+        return date;
+      },
+    },
+  })
   updatedAt: number; // timestamp of last update
-
-  constructor(partial: Partial<User>) {
-    Object.assign(this, partial);
-  }
 }
