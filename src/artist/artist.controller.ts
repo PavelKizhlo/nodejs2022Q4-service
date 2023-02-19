@@ -5,7 +5,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  NotFoundException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -19,12 +18,12 @@ export class ArtistController {
   constructor(private artistService: ArtistService) {}
 
   @Get()
-  findAll() {
-    // return this.artistService.getAllArtists();
+  async findAll() {
+    return await this.artistService.getAllArtists();
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -34,20 +33,16 @@ export class ArtistController {
     )
     id: string,
   ) {
-    // const artist = this.artistService.getArtistById(id);
-    // if (!artist) {
-    //   throw new NotFoundException('No artists with such id');
-    // }
-    // return artist;
+    return await this.artistService.getArtistById(id);
   }
 
   @Post()
-  create(@Body() createArtistDto: CreateArtistDto) {
-    // return this.artistService.createArtist(createArtistDto);
+  async create(@Body() createArtistDto: CreateArtistDto) {
+    return await this.artistService.createArtist(createArtistDto);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -58,12 +53,12 @@ export class ArtistController {
     id: string,
     @Body() updateArtistDto: CreateArtistDto,
   ) {
-    // return this.artistService.updateArtist(id, updateArtistDto);
+    return await this.artistService.updateArtist(id, updateArtistDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -73,6 +68,6 @@ export class ArtistController {
     )
     id: string,
   ) {
-    // this.artistService.removeArtist(id);
+    await this.artistService.removeArtist(id);
   }
 }
