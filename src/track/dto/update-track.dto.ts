@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
 
-export class CreateTrackDto {
+export class UpdateTrackDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;

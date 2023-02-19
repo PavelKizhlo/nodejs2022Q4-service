@@ -5,7 +5,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  NotFoundException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -13,18 +12,19 @@ import {
 } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
+import { UpdateTrackDto } from './dto/update-track.dto';
 
 @Controller('track')
 export class TrackController {
   constructor(private trackService: TrackService) {}
 
   @Get()
-  findAll() {
-    // return this.trackService.getAllTracks();
+  async findAll() {
+    return await this.trackService.getAllTracks();
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -34,20 +34,16 @@ export class TrackController {
     )
     id: string,
   ) {
-    // const track = this.trackService.getTrackById(id);
-    // if (!track) {
-    //   throw new NotFoundException('No tracks with such id');
-    // }
-    // return track;
+    return await this.trackService.getTrackById(id);
   }
 
   @Post()
-  create(@Body() createTrackDto: CreateTrackDto) {
-    // return this.trackService.createTrack(createTrackDto);
+  async create(@Body() createTrackDto: CreateTrackDto) {
+    return await this.trackService.createTrack(createTrackDto);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -56,14 +52,14 @@ export class TrackController {
       }),
     )
     id: string,
-    @Body() updateTrackDto: CreateTrackDto,
+    @Body() updateTrackDto: UpdateTrackDto,
   ) {
-    // return this.trackService.updateTrack(id, updateTrackDto);
+    return await this.trackService.updateTrack(id, updateTrackDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -73,6 +69,6 @@ export class TrackController {
     )
     id: string,
   ) {
-    // this.trackService.removeTrack(id);
+    await this.trackService.removeTrack(id);
   }
 }
