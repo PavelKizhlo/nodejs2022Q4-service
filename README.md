@@ -12,7 +12,7 @@ ___
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/PavelKizhlo/nodejs2022Q4-service
 ```
 ___
 ## Installing NPM modules
@@ -22,47 +22,54 @@ npm install
 ```
 ___
 ## Running application
-
+#### ( It is recommended to start the app in container! See bellow. )
+Application works with PostgreSQL database. If you have postgres server locally, specify Postgres environment variables in `.env` file. Example of `.env` you can find in root directory. You also need to start migrations manually by npm script
 ```
-npm start
+npm run typeorm:migration
 ```
-By default, app expose on 4000 port. You can specify port on your own in `.env` file. Example of `.env` you can find in root directory. 
+and start app with script
+```
+npm run start
+```
+By default, app expose on 4000 port. You can specify port on your own in `.env` file.
 
 After starting the app you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 ___
-## Structure
-
-```json5
-+-- dist // Source build
-+-- doc // Open API Documentation in YAML
-+-- src
-|   +-- album // Album module
-|   +-- artist // Artist module
-|   +-- database // Database module
-|   |   +-- entities // Constant value and Enum
-|   |   |   +-- db.albums.ts // Entity class
-|   |   |   +-- db.entity.ts // Abstract class
-|   |   |   ...
-|   |   +-- errors // Custom errors
-|   |   +-- data.placeholder.ts // Mock data
-|   |   +-- database.module.ts
-|   |   +-- database.ts // In-memory database as service
-|   +-- favorites // Favorites module
-|   +-- track // Track module
-|   +-- user // User module
-+-- test // Jest testing
-...
-
-// Module structure
-+-- src/album
-|   +-- dto // DTO's
-|   +-- interfaces // Interfaces
-|   +-- album.controller.ts
-|   +-- album.service.ts
-|   +-- album.module.ts
+## Docker
+You also can run application in container. You have to install Docker on your machine. And start docker-composer with docker CLI:
 ```
+docker-compose up
+```
+or npm script:
+```
+npm run docker:dev
+```
+You can build images with:
+```
+npm run docker:build
+```
+And stop containers with:
+```
+npm run docker:stop
+```
+Here is script for scanning vulnerabilities (You should login to Snyk, after first 10 scans. https://snyk.io/ - for more):
+```
+npm run docker:scan
+```
+#### Notes:
+Development was carried out on Mac with `M1` chip. That's why `--platform=linux/amd64` flag used. If your machine have other architecture, please, remove it.
+
+Hot reloading for app development was implemented by mounting `./usr/app/src` volume to `./src` local directory and using `npm run start:dev` as command for container. But if you are on Windows, disable WSL and use Hyper-V instead. WSL2 doesn't work with hot reload. Other option is to use nodemon for hot reloading. For this replace
+```
+command: sh -c "npm run typeorm:migration && npm run start:dev"
+```
+by
+```
+command: sh -c "npm run typeorm:migration && npm run start:dev-nodemon"
+```
+in `docker-compose.yml`.
 ___
 ## Testing
 
