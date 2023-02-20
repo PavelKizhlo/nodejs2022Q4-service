@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    image: nestjs-app
+    image: pavelkizhlo/nodejs2022q4-service:app
     container_name: nest-app
     restart: always
     env_file: .env
@@ -16,7 +16,7 @@ services:
       - app-network
   db:
     build: ./src/database
-    image: postgres-db
+    image: pavelkizhlo/nodejs2022q4-service:db
     container_name: db
     restart: always
     env_file: .env
