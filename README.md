@@ -23,7 +23,8 @@ npm install
 ___
 ## Running application
 #### ( It is recommended to start the app in container! See bellow. )
-Application works with PostgreSQL database. If you have postgres server locally, specify Postgres environment variables in `.env` file. Example of `.env` you can find in root directory. You also need to start migrations manually by npm script
+Application works with PostgreSQL database. If you have postgres server locally, specify Postgres environment variables (`POSTGRES_HOST`,
+`POSTGRES_PORT`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`) in `.env` file. Example of `.env` you can find in root directory. You also need to start migrations manually by npm script
 ```
 npm run typeorm:migration
 ```
