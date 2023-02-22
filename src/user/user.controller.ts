@@ -6,7 +6,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  NotFoundException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -23,13 +22,13 @@ export class UserController {
 
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
-  findAll() {
-    return this.userService.getAllUsers();
+  async findAll() {
+    return await this.userService.getAllUsers();
   }
 
   @Get(':id')
   @UseInterceptors(ClassSerializerInterceptor)
-  findOne(
+  async findOne(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -39,22 +38,18 @@ export class UserController {
     )
     id: string,
   ) {
-    const user = this.userService.getUserById(id);
-    if (!user) {
-      throw new NotFoundException('No users with such id');
-    }
-    return user;
+    return await this.userService.getUserById(id);
   }
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
   @UseInterceptors(ClassSerializerInterceptor)
-  updatePassword(
+  async updatePassword(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -65,12 +60,12 @@ export class UserController {
     id: string,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    return this.userService.updatePassword(id, updatePasswordDto);
+    return await this.userService.updatePassword(id, updatePasswordDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -80,6 +75,6 @@ export class UserController {
     )
     id: string,
   ) {
-    this.userService.removeUser(id);
+    await this.userService.removeUser(id);
   }
 }

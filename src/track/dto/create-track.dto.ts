@@ -3,17 +3,17 @@ import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
 export class CreateTrackDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  readonly name: string;
 
   @IsString()
   @ValidateIf((object, value) => value !== null)
-  artistId: string | null;
+  readonly artistId: string | null;
 
   @IsString()
   @ValidateIf((object, value) => value !== null)
-  albumId: string | null;
+  readonly albumId: string | null;
 
   @IsNotEmpty()
   @IsNumber()
-  duration: number;
+  readonly duration: number;
 }
