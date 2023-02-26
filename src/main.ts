@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import * as yaml from 'js-yaml';
@@ -7,6 +7,7 @@ import * as path from 'path';
 import { AppModule } from './app.module';
 import { LoggingService } from './logging/logging.service';
 import { LoggingInterceptor } from './logging/logging.interceptor';
+import { AllExceptionsFilter } from './exceptions/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -22,6 +23,10 @@ async function bootstrap() {
   });
   const document = <OpenAPIObject>yaml.load(file);
   SwaggerModule.setup('doc', app, document);
+
+  // Exception filter settings
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter, logger));
 
   // Validation pipes settings
   app.useGlobalPipes(new ValidationPipe());
