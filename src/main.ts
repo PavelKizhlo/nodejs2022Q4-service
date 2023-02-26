@@ -6,14 +6,14 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { AppModule } from './app.module';
 import { LoggingService } from './logging/logging.service';
+import { LoggingInterceptor } from './logging/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
 
-  // const logger = app.get(LoggingService);
-  const logger = new LoggingService('Global', { timestamp: true });
+  const logger = app.get(LoggingService);
   app.useLogger(logger);
 
   // Swagger settings
@@ -25,6 +25,9 @@ async function bootstrap() {
 
   // Validation pipes settings
   app.useGlobalPipes(new ValidationPipe());
+
+  // Logging interceptor settings
+  app.useGlobalInterceptors(new LoggingInterceptor(logger));
 
   await app.listen(process.env.PORT || 4000);
 
