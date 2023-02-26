@@ -27,5 +27,16 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(process.env.PORT || 4000);
+
+  process.on('uncaughtException', (err, origin) => {
+    logger.error(err.message, origin);
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason) => {
+    const msg = reason instanceof Error ? reason.message : reason;
+    logger.error(msg, 'unhandledRejection');
+    process.exit(1);
+  });
 }
 bootstrap();
