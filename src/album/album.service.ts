@@ -16,9 +16,7 @@ export class AlbumService {
   }
 
   async getAlbumById(id: string) {
-    const album = await this.albumRepository.findOne({
-      where: { id },
-    });
+    const album = await this.albumRepository.findOneBy({ id });
     if (!album) {
       throw new NotFoundException('No albums with such id');
     }
@@ -32,9 +30,7 @@ export class AlbumService {
   }
 
   async updateAlbum(id: string, updateAlbumDto: UpdateAlbumDto) {
-    const albumToUpdate = await this.albumRepository.findOne({
-      where: { id },
-    });
+    const albumToUpdate = await this.albumRepository.findOneBy({ id });
     if (!albumToUpdate) {
       throw new NotFoundException('No albums with such id');
     }
@@ -44,9 +40,7 @@ export class AlbumService {
   }
 
   async removeAlbum(id: string) {
-    const albumToRemove = await this.albumRepository.findOne({
-      where: { id },
-    });
+    const albumToRemove = await this.albumRepository.findOneBy({ id });
     if (!albumToRemove) {
       throw new NotFoundException('No albums with such id');
     }
