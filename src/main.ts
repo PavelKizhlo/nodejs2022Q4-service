@@ -1,5 +1,5 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import * as yaml from 'js-yaml';
 import * as fs from 'fs/promises';
@@ -14,7 +14,14 @@ async function bootstrap() {
     bufferLogs: true,
   });
 
+  // Log level settings
+  const allLogLevels: LogLevel[] = ['log', 'error', 'warn', 'debug', 'verbose'];
+  const logLevel = +(process.env.LOGGING_LEVEL as string) + 1;
+  const enableLogs = allLogLevels.slice(0, logLevel);
+
+  // Logger settings
   const logger = app.get(LoggingService);
+  logger.setLogLevels(enableLogs);
   app.useLogger(logger);
 
   // Swagger settings
