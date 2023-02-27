@@ -160,6 +160,8 @@ paths:
                   token:
                     type: string
                 description: JWT Token
+        400:
+          description: Bad request
         403:
           description: Incorrect login or password
   /auth/signup:
@@ -191,7 +193,7 @@ paths:
                 - login
                 - password
       responses:
-        204:
+        201:
           description: Successful signup
         400:
           description: Bad request

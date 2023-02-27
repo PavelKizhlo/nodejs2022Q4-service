@@ -7,12 +7,13 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
-  @HttpCode(204)
+  @HttpCode(201)
   async signup(@Body() createUserDto: CreateUserDto) {
     return await this.authService.signup(createUserDto);
   }
 
   @Post('login')
+  @HttpCode(200)
   async login(@Body() createUserDto: CreateUserDto) {
     return await this.authService.login(createUserDto);
   }
