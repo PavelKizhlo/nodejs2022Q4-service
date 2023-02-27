@@ -8,6 +8,8 @@ import { AppModule } from './app.module';
 import { LoggingService } from './logging/logging.service';
 import { LoggingInterceptor } from './logging/logging.interceptor';
 import { AllExceptionsFilter } from './exceptions/all-exceptions.filter';
+import { AuthGuard } from './auth/auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -40,6 +42,10 @@ async function bootstrap() {
 
   // Logging interceptor settings
   app.useGlobalInterceptors(new LoggingInterceptor(logger));
+
+  // Guards settings
+  const jwtService = app.get(JwtService);
+  app.useGlobalGuards(new AuthGuard(jwtService));
 
   await app.listen(process.env.PORT || 4000);
 
