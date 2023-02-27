@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import * as path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-config({ path: path.join(__dirname, '.env') });
+config({ path: path.join(__dirname, '../', '.env') });
 
 const {
   POSTGRES_HOST,

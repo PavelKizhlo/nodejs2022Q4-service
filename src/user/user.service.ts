@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { hash } from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { User } from './entities/user.entity';
@@ -20,9 +21,7 @@ export class UserService {
   }
 
   async getUserById(id: string) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-    });
+    const user = await this.userRepository.findOneBy({ id });
     if (!user) {
       throw new NotFoundException('No users with such id');
     }
@@ -30,15 +29,18 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const newUser = await this.userRepository.create(createUserDto);
+    const cryptSalt = +(<string>process.env.CRYPT_SALT) ?? 10;
+    const hashedPassword = await hash(createUserDto.password, cryptSalt);
+    const newUser = await this.userRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
+    });
     await this.userRepository.save(newUser);
     return newUser;
   }
 
   async updatePassword(id: string, updatePasswordDto: UpdatePasswordDto) {
-    const userToUpdate = await this.userRepository.findOne({
-      where: { id },
-    });
+    const userToUpdate = await this.userRepository.findOneBy({ id });
     if (!userToUpdate) {
       throw new NotFoundException('No users with such id');
     }
@@ -51,9 +53,7 @@ export class UserService {
   }
 
   async removeUser(id: string) {
-    const userToRemove = await this.userRepository.findOne({
-      where: { id },
-    });
+    const userToRemove = await this.userRepository.findOneBy({ id });
     if (!userToRemove) {
       throw new NotFoundException('No users with such id');
     }

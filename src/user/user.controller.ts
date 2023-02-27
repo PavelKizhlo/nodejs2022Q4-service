@@ -17,17 +17,16 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  @UseInterceptors(ClassSerializerInterceptor)
   async findAll() {
     return await this.userService.getAllUsers();
   }
 
   @Get(':id')
-  @UseInterceptors(ClassSerializerInterceptor)
   async findOne(
     @Param(
       'id',
@@ -42,13 +41,11 @@ export class UserController {
   }
 
   @Post()
-  @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
-  @UseInterceptors(ClassSerializerInterceptor)
   async updatePassword(
     @Param(
       'id',

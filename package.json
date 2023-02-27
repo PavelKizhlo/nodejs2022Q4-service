@@ -24,6 +24,7 @@
     "typeorm:generate": "npm run typeorm migration:generate src/database/migrations/newTables",
     "typeorm:migration": "npm run typeorm migration:run",
     "docker:dev": "docker-compose up",
+    "docker:dev-db": "docker-compose up db",
     "docker:stop": "docker-compose down",
     "docker:build": "docker-compose build",
     "docker:scan": "docker scan nestjs-app && docker scan db"
@@ -44,6 +45,7 @@
     "dotenv": "^16.0.1",
     "http-status-codes": "^2.2.0",
     "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.0",
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
