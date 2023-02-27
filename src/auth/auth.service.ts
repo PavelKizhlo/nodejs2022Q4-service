@@ -10,13 +10,33 @@ import { sign } from 'jsonwebtoken';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     @InjectRepository(User) private userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
+  private getTokens(user: User) {
+    const payload = { userId: user.id, login: user.login };
+
+    const token = sign(payload, <string>process.env.JWT_SECRET_KEY, {
+      expiresIn: process.env.TOKEN_EXPIRE_TIME,
+    });
+
+    const refreshToken = sign(
+      payload,
+      <string>process.env.JWT_SECRET_REFRESH_KEY,
+      {
+        expiresIn: process.env.TOKEN_REFRESH_EXPIRE_TIME,
+      },
+    );
+
+    return { token, refreshToken };
+  }
 
   async signup(createUserDto: CreateUserDto) {
     const loginExists = !!(await this.userRepository.findOneBy({
@@ -48,11 +68,25 @@ export class AuthService {
       throw new ForbiddenException('Invalid password');
     }
 
-    const token = sign(
-      { userId: user.id, login: user.login },
-      <string>process.env.JWT_SECRET_KEY,
+    return this.getTokens(user);
+  }
+
+  async refresh(refreshTokenDto: RefreshTokenDto) {
+    const userData: { userId: string; login: string } = this.jwtService.verify(
+      refreshTokenDto.refreshToken,
+      {
+        secret: <string>process.env.JWT_SECRET_REFRESH_KEY,
+      },
     );
 
-    return { token };
+    const user = await this.userRepository.findOneBy({
+      id: userData.userId,
+    });
+
+    if (!user) {
+      throw new ForbiddenException('refresh token is invalid or expired');
+    }
+
+    return this.getTokens(user);
   }
 }

@@ -159,6 +159,8 @@ paths:
                 properties:
                   token:
                     type: string
+                  refreshToken:
+                    type: string
                 description: JWT Token
         400:
           description: Bad request
