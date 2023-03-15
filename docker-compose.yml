@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    image: pavelkizhlo/nodejs2022q4-service:app
+    container_name: nest-app
+    restart: always
+    env_file: .env
+    command: sh -c "npm run typeorm:migration && npm run start:dev"
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db
+    volumes:
+      - ./src:/usr/app/src
+    networks:
+      - app-network
+  db:
+    build: ./src/database
+    image: pavelkizhlo/nodejs2022q4-service:db
+    container_name: db
+    restart: always
+    env_file: .env
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - app-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  pg-data:
+networks:
+  app-network:
+    driver: bridge
+    enable_ipv6: false

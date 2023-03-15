@@ -1,55 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Database } from '../database/database';
-import { NoRequiredEntity } from '../database/errors/noRequireEntity.error';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateArtistDto } from './dto/create-artist.dto';
+import { UpdateArtistDto } from './dto/update-artist.dto';
+import { Artist } from './entities/artist.entity';
 
 @Injectable()
 export class ArtistService {
-  constructor(private db: Database) {}
+  constructor(
+    @InjectRepository(Artist) private artistRepository: Repository<Artist>,
+  ) {}
 
-  getAllArtists() {
-    return this.db.artists.getAll();
+  async getAllArtists() {
+    return await this.artistRepository.find();
   }
 
-  getArtistById(id: string) {
-    return this.db.artists.getById(id);
-  }
-
-  createArtist(createArtistDto: CreateArtistDto) {
-    return this.db.artists.create(createArtistDto);
-  }
-
-  updateArtist(id: string, updateArtistDto: CreateArtistDto) {
-    try {
-      return this.db.artists.update(id, updateArtistDto);
-    } catch (err) {
-      throw err instanceof NoRequiredEntity
-        ? new NotFoundException('No artists with such id')
-        : err;
+  async getArtistById(id: string) {
+    const artist = await this.artistRepository.findOneBy({ id });
+    if (!artist) {
+      throw new NotFoundException('No artists with such id');
     }
+    return artist;
   }
 
-  removeArtist(id: string) {
-    try {
-      this.db.artists.remove(id);
-      const artistTracks = this.db.tracks.getTracksByEntityId(id, 'artistId');
-      const artistAlbums = this.db.albums.getAlbumsByArtistId(id);
-      artistTracks.forEach((track) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { id, ...trackDto } = track;
-        trackDto.artistId = null;
-        this.db.tracks.update(track.id, trackDto);
-      });
-      artistAlbums.forEach((album) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { id, ...albumDto } = album;
-        albumDto.artistId = null;
-        this.db.albums.update(album.id, albumDto);
-      });
-    } catch (err) {
-      throw err instanceof NoRequiredEntity
-        ? new NotFoundException('No artists with such id')
-        : err;
+  async createArtist(createArtistDto: CreateArtistDto) {
+    const newArtist = this.artistRepository.create(createArtistDto);
+    await this.artistRepository.save(newArtist);
+    return newArtist;
+  }
+
+  async updateArtist(id: string, updateArtistDto: UpdateArtistDto) {
+    const artistToUpdate = await this.artistRepository.findOneBy({ id });
+    if (!artistToUpdate) {
+      throw new NotFoundException('No artists with such id');
     }
+    const updatedArtist = { ...artistToUpdate, ...updateArtistDto };
+    await this.artistRepository.save(updatedArtist);
+    return updatedArtist;
+  }
+
+  async removeArtist(id: string) {
+    const artistToRemove = await this.artistRepository.findOneBy({ id });
+    if (!artistToRemove) {
+      throw new NotFoundException('No artists with such id');
+    }
+    await this.artistRepository.remove(artistToRemove);
   }
 }
