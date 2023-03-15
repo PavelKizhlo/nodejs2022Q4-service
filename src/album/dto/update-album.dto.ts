@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
 
-export class CreateAlbumDto {
+export class UpdateAlbumDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
