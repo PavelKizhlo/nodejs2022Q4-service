@@ -16,9 +16,7 @@ export class ArtistService {
   }
 
   async getArtistById(id: string) {
-    const artist = await this.artistRepository.findOne({
-      where: { id },
-    });
+    const artist = await this.artistRepository.findOneBy({ id });
     if (!artist) {
       throw new NotFoundException('No artists with such id');
     }
@@ -32,9 +30,7 @@ export class ArtistService {
   }
 
   async updateArtist(id: string, updateArtistDto: UpdateArtistDto) {
-    const artistToUpdate = await this.artistRepository.findOne({
-      where: { id },
-    });
+    const artistToUpdate = await this.artistRepository.findOneBy({ id });
     if (!artistToUpdate) {
       throw new NotFoundException('No artists with such id');
     }
@@ -44,9 +40,7 @@ export class ArtistService {
   }
 
   async removeArtist(id: string) {
-    const artistToRemove = await this.artistRepository.findOne({
-      where: { id },
-    });
+    const artistToRemove = await this.artistRepository.findOneBy({ id });
     if (!artistToRemove) {
       throw new NotFoundException('No artists with such id');
     }

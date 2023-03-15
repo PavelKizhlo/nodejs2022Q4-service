@@ -7,14 +7,18 @@ import { ArtistModule } from './artist/artist.module';
 import { AlbumModule } from './album/album.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { dataSourceOptions } from './dataSource';
+import { LoggingModule } from './logging/logging.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    LoggingModule,
     UserModule,
     TrackModule,
     ArtistModule,
     AlbumModule,
     FavoritesModule,
+    AuthModule,
     ConfigModule.forRoot({ envFilePath: './.env', isGlobal: true }),
     TypeOrmModule.forRoot(dataSourceOptions),
   ],

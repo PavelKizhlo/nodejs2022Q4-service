@@ -16,9 +16,7 @@ export class TrackService {
   }
 
   async getTrackById(id: string) {
-    const track = await this.trackRepository.findOne({
-      where: { id },
-    });
+    const track = await this.trackRepository.findOneBy({ id });
     if (!track) {
       throw new NotFoundException('No tracks with such id');
     }
@@ -32,9 +30,7 @@ export class TrackService {
   }
 
   async updateTrack(id: string, updateTrackDto: UpdateTrackDto) {
-    const trackToUpdate = await this.trackRepository.findOne({
-      where: { id },
-    });
+    const trackToUpdate = await this.trackRepository.findOneBy({ id });
     if (!trackToUpdate) {
       throw new NotFoundException('No tracks with such id');
     }
@@ -44,9 +40,7 @@ export class TrackService {
   }
 
   async removeTrack(id: string) {
-    const trackToRemove = await this.trackRepository.findOne({
-      where: { id },
-    });
+    const trackToRemove = await this.trackRepository.findOneBy({ id });
     if (!trackToRemove) {
       throw new NotFoundException('No tracks with such id');
     }
